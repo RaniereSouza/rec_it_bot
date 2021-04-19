@@ -26,18 +26,19 @@ if (consumer_key        != None) and \
 
 else:
 
-  print('some environment variable is missing...')
+  print('Está faltando alguma varíavel de ambiente...')
   exit()
+
 
 
 try :
 
   user = api.verify_credentials()
-  print('Tweepy Authentication is OK\n')
+  print(f'Autenticação do Tweepy OK! (conta: @{user.screen_name})\n')
 
 except :
 
-  print('Error during Tweepy Authentication')
+  print('Erro durante autenticação do Tweepy')
   exit()
 
 
@@ -57,7 +58,7 @@ while True :
 
     except:
 
-      print('Failed to send new tweet')
+      print('Falha ao enviar novo tweet')
       exit()
 
   else :
