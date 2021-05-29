@@ -1,47 +1,10 @@
-import os, tweepy
-from dotenv import load_dotenv
+from tweepy_connect import TweepyConnect
 
+tweepy = TweepyConnect()
 
-
-load_dotenv()
-
-
-
-consumer_key        = os.getenv('TWEEPY_CONSUMER_KEY')
-consumer_secret     = os.getenv('TWEEPY_CONSUMER_SECRET')
-access_token        = os.getenv('TWEEPY_ACCESS_TOKEN')
-access_token_secret = os.getenv('TWEEPY_ACCESS_TOKEN_SECRET')
-
-
-
-if (consumer_key        != None) and \
-   (consumer_secret     != None) and \
-   (access_token        != None) and \
-   (access_token_secret != None) :
-
-  auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-  auth.set_access_token(access_token, access_token_secret)
-
-  api = tweepy.API(auth)
-
-else:
-
-  print('Está faltando alguma varíavel de ambiente...')
+if (not tweepy) or (not tweepy.api) or (not tweepy.user) :
+  print('problemas na inicialização do Tweepy')
   exit()
-
-
-
-try :
-
-  user = api.verify_credentials()
-  print(f'Autenticação do Tweepy OK! (conta: @{user.screen_name})\n')
-
-except :
-
-  print('Erro durante autenticação do Tweepy')
-  exit()
-
-
 
 while True :
 
@@ -53,8 +16,8 @@ while True :
 
     try:
 
-      api.update_status(text)
-      print(f'Texto tweetado para a timeline de @{user.screen_name}\n')
+      tweepy.api.update_status(text)
+      print(f'Texto tweetado para a timeline de @{tweepy.user.screen_name}\n')
 
     except:
 
